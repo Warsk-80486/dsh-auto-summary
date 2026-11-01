@@ -66,3 +66,23 @@ jobs:
             }
             console.log("bundle manifest OK");
           '
+
+      - name: Check that the published tarball contains every runtime module
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import { execFileSync } from "node:child_process";
+            const report = JSON.parse(execFileSync("npm", ["pack", "--dry-run", "--json"], { encoding: "utf8" }));
+            const files = new Set(report[0].files.map((entry) => entry.path));
+            const built = fs.readdirSync("lib").filter((name) => name.endsWith(".js")).map((name) => `lib/${name}`);
+            const missing = built.filter((path) => !files.has(path));
+            for (const required of ["cordis.patch.yml", "icon.svg", "locale/en.json", "locale/zh.json", "package.json"]) {
+              if (!files.has(required)) missing.push(required);
+            }
+            if (missing.length > 0) {
+              console.error("missing from the published tarball:", missing);
+              process.exit(1);
+            }
+            console.log(`tarball OK: ${built.length} runtime modules plus manifest assets`);
+          '
+

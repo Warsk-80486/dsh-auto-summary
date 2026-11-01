@@ -17,7 +17,7 @@
   "files": [
     "icon.svg",
     "locale/*.json",
-    "lib/index.js",
+    "lib/*.js",
     "lib/types/**/*.d.ts",
     "cordis.patch.yml"
   ],
