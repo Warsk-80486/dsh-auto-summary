@@ -48,13 +48,13 @@ In the DSH Web GUI, open **Plugins** and install this repository as a bundle, or
 ask the agent to run `plugin_manager` with `install_bundle`:
 
 ```text
-git+https://github.com/your-name/dsh-auto-summary.git
+git+https://github.com/Warsk-80486/dsh-auto-summary.git
 ```
 
 Pin a commit for reproducibility:
 
 ```text
-git+https://github.com/your-name/dsh-auto-summary.git#<40-char-commit-sha>
+git+https://github.com/Warsk-80486/dsh-auto-summary.git#<40-char-commit-sha>
 ```
 
 The built ESM `lib/` is committed on purpose: DSH installs third-party bundles as
@@ -241,8 +241,9 @@ commit it with any source change; CI fails when the committed output is stale.
 
 ## Publishing
 
-1. Replace `your-name` in `package.json` (`repository`, `homepage`, `bugs`) and
-   in the install commands above.
+1. Repository URLs already point at `Warsk-80486/dsh-auto-summary`; update
+   `package.json` (`repository`, `homepage`, `bugs`) and the install commands if the
+   repository moves.
 2. `pnpm run verify && pnpm run build`, then commit `lib/`.
 3. Tag a release, e.g. `git tag v0.1.0 && git push --tags`.
 4. Optional: publish to npm with `npm publish` (the package is unscoped and

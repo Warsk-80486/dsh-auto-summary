@@ -44,13 +44,13 @@
 `plugin_manager` 的 `install_bundle`：
 
 ```text
-git+https://github.com/your-name/dsh-auto-summary.git
+git+https://github.com/Warsk-80486/dsh-auto-summary.git
 ```
 
 需要锁定版本时使用提交 SHA：
 
 ```text
-git+https://github.com/your-name/dsh-auto-summary.git#<40 位 commit sha>
+git+https://github.com/Warsk-80486/dsh-auto-summary.git#<40 位 commit sha>
 ```
 
 仓库**有意提交了构建产物 `lib/`**：DSH 以 git 依赖方式安装第三方插件，而包管理器会
@@ -208,8 +208,8 @@ pnpm run verify         # 一次完成类型检查 + 测试
 
 ## 发布清单
 
-1. 把 `package.json` 的 `repository` / `homepage` / `bugs` 以及本文安装命令中的
-   `your-name` 改成实际 GitHub 用户名。
+1. 仓库地址已指向 `Warsk-80486/dsh-auto-summary`；如仓库迁移，请同步修改
+   `package.json` 的 `repository` / `homepage` / `bugs` 与本文安装命令。
 2. 执行 `pnpm run verify && pnpm run build`，提交 `lib/`。
 3. 打 tag 并推送：`git tag v0.1.0 && git push --tags`。
 4. 可选：`npm publish` 发布到 npm（包名未加 scope 且为公开包），之后可用
