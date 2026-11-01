@@ -1,0 +1,24 @@
+# dsh-auto-summary bundle patch.
+#
+# This file is the bundle layer: DSH applies it after the profile's base bundles
+# and before the profile's own cordis.patch.yml. It inserts exactly one plugin
+# row, whose `name` is this package's entry point, so the bundle is the plugin.
+#
+# Every option has a schema default, so the row mounts with no config block.
+# To configure it, restate the row in the profile's own cordis.patch.yml (applied
+# after this layer), for example:
+#
+#   - id: auto-summary
+#     config:
+#       thresholdTokens: 1000000
+#       metric: total
+#       summary:
+#         provider: deepseek
+#         model: deepseek-chat
+#       handoff:
+#         delivery: parent
+#
+# See README.md ("Configuration") for every field and its default.
+- insert:
+    - id: auto-summary
+      name: 'dsh-auto-summary'

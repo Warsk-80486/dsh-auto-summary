@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Typecheck, build, and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Build the published entry
+        run: pnpm run build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Check that the committed lib/ matches the sources
+        run: git diff --exit-code -- lib
+
+  manifest:
+    name: Validate the bundle manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Validate package.json bundle metadata
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import assert from "node:assert/strict";
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            assert.equal(pkg.type, "module");
+            assert.equal(pkg.main, "lib/index.js");
+            assert.equal(pkg.dsh?.bundle?.patch, "./cordis.patch.yml");
+            assert.ok(fs.existsSync("cordis.patch.yml"), "cordis.patch.yml must exist");
+            assert.ok(fs.existsSync("lib/index.js"), "prebuilt lib/index.js must be committed");
+            assert.ok(fs.existsSync("icon.svg"), "icon.svg must exist");
+            for (const manifest of ["locale/en.json", "locale/zh.json"]) {
+              JSON.parse(fs.readFileSync(manifest, "utf8"));
+            }
+            console.log("bundle manifest OK");
+          '

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Auto Summary & Handoff",
+    "description": "Summarize a session once it crosses a token threshold and start a fresh agent with the brief, always including the original first prompt."
+  }
+}

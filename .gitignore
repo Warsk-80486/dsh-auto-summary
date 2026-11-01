@@ -1,0 +1,12 @@
+# Build output is committed on purpose: DSH installs third-party bundles as
+# git dependencies, and pnpm blocks dependency build scripts, so the prebuilt
+# ESM `lib/` must ship in the repository. Do not add `lib/` here.
+node_modules/
+.test-build/
+coverage/
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
