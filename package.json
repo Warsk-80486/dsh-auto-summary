@@ -25,11 +25,11 @@
   "icon": "./icon.svg",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-name/dsh-auto-summary.git"
+    "url": "git+https://github.com/Warsk-80486/dsh-auto-summary.git"
   },
-  "homepage": "https://github.com/your-name/dsh-auto-summary#readme",
+  "homepage": "https://github.com/Warsk-80486/dsh-auto-summary#readme",
   "bugs": {
-    "url": "https://github.com/your-name/dsh-auto-summary/issues"
+    "url": "https://github.com/Warsk-80486/dsh-auto-summary/issues"
   },
   "keywords": [
     "deepseek-harness",

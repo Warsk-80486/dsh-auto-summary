@@ -19,7 +19,7 @@
 | | |
 |---|---|
 | **回合结束触发** | 监听 `session/event` 中的 `turn/end`，即每个工作回合结束后检查。 |
-| **Token 阈值** | 默认 **1,000,000**，基于会话持久化日志计算。 |
+| **Token 阈值** | 默认 **100,000,000**，基于会话持久化日志计算。 |
 | **两种度量** | `total`（累计计费 token，默认）或 `context`（当前上下文压力）。 |
 | **保证带首次提示词** | 从 DSH 的 `titleInput` 投影读取（压缩后仍保留），并且即使自定义模板漏写也会强制追加。 |
 | **新建 agent** | 通过 `ctx.subagents.startActivation` + `spawn` provider 创建，交接总结即其首条用户消息。 |
@@ -85,7 +85,7 @@ dsh plugin --profile desktop remove dsh-auto-summary
 ```yaml
 - id: auto-summary
   config:
-    thresholdTokens: 1000000
+    thresholdTokens: 100000000
     metric: total
     summary:
       provider: deepseek
@@ -96,7 +96,7 @@ dsh plugin --profile desktop remove dsh-auto-summary
 
 | 字段 | 默认值 | 说明 |
 |---|---|---|
-| `thresholdTokens` | `1000000` | 触发一次总结/交接的用量阈值，最小 1000。 |
+| `thresholdTokens` | `100000000` | 触发一次总结/交接的用量阈值，最小 1000。 |
 | `metric` | `total` | `total`：累计计费 token（`tokenUsage` 投影）；`context`：当前请求压力（`ctx.tokenMeter.measure`）。 |
 | `onlyCompletedTurns` | `true` | 仅在 `turn/end` 原因为 `completed` 时触发。 |
 | `summarizeSubagentSessions` | `false` | 保持关闭，避免交接 agent 再次触发交接。 |

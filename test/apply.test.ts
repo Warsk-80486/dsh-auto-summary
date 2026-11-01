@@ -13,7 +13,7 @@ describe('plugin entry', () => {
     assert.equal(typeof plugin.Config, 'function')
     assert.equal(typeof plugin.apply, 'function')
     const config = plugin.Config({}) as { thresholdTokens: number; metric: string }
-    assert.equal(config.thresholdTokens, 1_000_000)
+    assert.equal(config.thresholdTokens, 100_000_000)
     assert.equal(config.metric, 'total')
   })
 })

@@ -5,7 +5,7 @@ import { Config, DEFAULT_HANDOFF_TEMPLATE, resolveConfig, type AutoSummaryConfig
 describe('config schema', () => {
   it('fills every default when the profile row has no config block', () => {
     const config = Config({}) as AutoSummaryConfig
-    assert.equal(config.thresholdTokens, 1_000_000)
+    assert.equal(config.thresholdTokens, 100_000_000)
     assert.equal(config.metric, 'total')
     assert.equal(config.onlyCompletedTurns, true)
     assert.equal(config.summarizeSubagentSessions, false)

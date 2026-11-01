@@ -98,7 +98,7 @@ export const Config = z
     thresholdTokens: z
       .natural()
       .min(1000)
-      .default(1_000_000)
+      .default(100_000_000)
       .description('Billed-token total at which one summary/handoff pass is triggered.'),
     metric: z
       .union([z.const('total'), z.const('context')])

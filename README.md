@@ -21,7 +21,7 @@ verbatim, so a continuation agent never loses the task it is continuing.
 | | |
 |---|---|
 | **Turn-end trigger** | Runs after a `turn/end` event, i.e. after each finished piece of work. |
-| **Token threshold** | Defaults to **1,000,000** tokens; measured from the durable session log. |
+| **Token threshold** | Defaults to **100,000,000** tokens; measured from the durable session log. |
 | **Two metrics** | `total` (cumulative provider-billed tokens, default) or `context` (current request pressure). |
 | **First prompt guaranteed** | Read from DSH's `titleInput` projection (survives compaction) and force-appended to the handoff task even if a custom template omits it. |
 | **Fresh agent** | Started through `ctx.subagents.startActivation` with the `spawn` provider; the brief is its first user message. |
@@ -93,7 +93,7 @@ is applied after the bundle's):
 ```yaml
 - id: auto-summary
   config:
-    thresholdTokens: 1000000
+    thresholdTokens: 100000000
     metric: total
     onlyCompletedTurns: true
     summarizeSubagentSessions: false
@@ -120,7 +120,7 @@ is applied after the bundle's):
 
 | Field | Default | Meaning |
 |---|---|---|
-| `thresholdTokens` | `1000000` | Usage figure at which one summary/handoff pass starts. Minimum 1000. |
+| `thresholdTokens` | `100000000` | Usage figure at which one summary/handoff pass starts. Minimum 1000. |
 | `metric` | `total` | `total`: cumulative billed tokens (`tokenUsage` projection). `context`: current request pressure (`ctx.tokenMeter.measure`). |
 | `onlyCompletedTurns` | `true` | Trigger only after `turn/end` with reason `completed`. |
 | `summarizeSubagentSessions` | `false` | Keep off to prevent handoff agents from triggering further handoffs. |
@@ -151,13 +151,13 @@ section is appended automatically — the fresh agent can never lose them.
 ## How it works
 
 ```text
-session/event  ──►  turn/end ?
+session/event  →  turn/end ?
                       │
                       ├─ onlyCompletedTurns / subagent guard
                       ▼
               measure usage (tokenUsage projection or tokenMeter.measure)
                       │
-                      ├─ below threshold ──► stop
+                      ├─ below threshold → stop
                       ▼
               TriggerLedger: one pass in flight per session
                       │
